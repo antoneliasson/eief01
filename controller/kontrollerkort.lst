@@ -1,0 +1,48 @@
+eeschema (2013-jul-07)-stable  >> Creation date: fre 10 okt 2014 15:41:46
+#Cmp ( order = Reference )
+| C1         100 nF      ; BOX2_1      
+| C2         100 nF      ; BOX2_1      
+| C3         10 uF       ; RA1_2       
+| D1         1N4148      ; AX2_1       
+| D2         LED         ; LED         
+| D3         LED         ; LED         
+| D4         LED         ; LED         
+| D5         LED         ; LED         
+| J1         SPI         ; SPI         
+| J2         SERIAL      ; SIP4        
+| J3         CONN_4_-3   ; SIP4_-3     
+| J4         RESET       ; SIP2        
+| J5         CONTROL     ; SIP5        
+| J6         SENSORS     ; SIP6        
+| R1         10k         ; AX3_1N      
+| R2         330         ; AX3_1N      
+| R3         330         ; AX3_1N      
+| R4         330         ; AX3_1N      
+| R5         330         ; AX3_1N      
+| U1         ATMEGA8     ; DIP28N      
+#End Cmp
+
+#Cmp ( order = Value )
+| 100 nF       C1        ; BOX2_1      
+| 100 nF       C2        ; BOX2_1      
+| 10 uF        C3        ; RA1_2       
+| 1N4148       D1        ; AX2_1       
+| LED          D2        ; LED         
+| LED          D3        ; LED         
+| LED          D4        ; LED         
+| LED          D5        ; LED         
+| RESET        J4        ; SIP2        
+| SERIAL       J2        ; SIP4        
+| CONN_4_-3    J3        ; SIP4_-3     
+| CONTROL      J5        ; SIP5        
+| SENSORS      J6        ; SIP6        
+| SPI          J1        ; SPI         
+| 330          R2        ; AX3_1N      
+| 330          R3        ; AX3_1N      
+| 330          R4        ; AX3_1N      
+| 330          R5        ; AX3_1N      
+| 10k          R1        ; AX3_1N      
+| ATMEGA8      U1        ; DIP28N      
+#End Cmp
+
+#End List
