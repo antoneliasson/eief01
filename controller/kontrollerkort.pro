@@ -1,4 +1,4 @@
-update=tis  7 okt 2014 20:22:42
+update=fre 10 okt 2014 14:48:50
 version=1
 last_client=eeschema
 [cvpcb]
@@ -47,7 +47,7 @@ LibName16=valves
 version=1
 [eeschema]
 version=1
-LibDir=../Kicad
+LibDir=../Kicad-komponenter
 NetFmtName=OrcadPCB2
 RptD_X=0
 RptD_Y=100
@@ -66,3 +66,5 @@ LibName9=V_Logic
 LibName10=V_Regulator
 LibName11=V_Relay
 LibName12=power
+LibName13=graphic
+LibName14=graphics
