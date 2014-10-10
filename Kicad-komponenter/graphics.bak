@@ -1,0 +1,15 @@
+EESchema-LIBRARY Version 2.3  Date: fre 10 okt 2014 14:49:24
+#encoding utf-8
+#
+# TEXT
+#
+DEF TEXT ~ 0 40 Y Y 1 F N
+F0 "~" 0 0 60 H V C CNN
+F1 "TEXT" 0 0 60 H V C CNN
+F2 "TEXT" -100 -100 60 H V C CNN
+F3 "~" 0 0 60 H V C CNN
+DRAW
+ENDDRAW
+ENDDEF
+#
+#End Library
