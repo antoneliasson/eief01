@@ -21,7 +21,7 @@ static void usart_init(unsigned int ubrr)
 
 int main(void)
 {
-    DDRC = 1<<2;
+    DDRC = 1<<5 | 1<<2;
 
     usart_init(UBRR);
     sei();
