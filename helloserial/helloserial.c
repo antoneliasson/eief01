@@ -2,6 +2,8 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#include "helloserial.h"
+
 #define BAUDRATE 4800
 #define UBRR F_CPU / BAUDRATE / 16 - 1
 
@@ -17,7 +19,7 @@ static void usart_init(unsigned int ubrr)
     UCSR0C = 3<<UCSZ00;
 }
 
-int main()
+int main(void)
 {
     DDRC = 1<<2;
 
