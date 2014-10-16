@@ -33,8 +33,18 @@ int main()
     return 0;
 }
 
+void toggle_status_led(void)
+{
+    if (PORTC & 1<<5) {
+        PORTC &= ~(1<<5);
+    } else {
+        PORTC |= 1<<5;
+    }
+}
+
 ISR(USART_RX_vect)
 {
+    toggle_status_led();
     char received = UDR0;
     UDR0 = received; // echo it back
 }
