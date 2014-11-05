@@ -1,0 +1,7 @@
+The extreme values for the OCR0A Register represents special cases when generating a PWM
+waveform output in the fast PWM mode. If the OCR0A is set equal to BOTTOM, the output will
+be a narrow spike for each MAX+1 timer clock cycle. Setting the OCR0A equal to MAX will result
+in a constantly high or low output (depending on the polarity of the output set by the COM0A1:0
+bits.)
+
+=> the highest value should turn the load constantly off
