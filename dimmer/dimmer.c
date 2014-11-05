@@ -39,7 +39,7 @@ int main(void)
 
     init_usart(UBRR);
     init_pwm();
-    OCR0A = 0x7F; // 50 % duty cycle
+    OCR0A = 0x40; // 25 % duty cycle
     sei();
 
     while (1) {
