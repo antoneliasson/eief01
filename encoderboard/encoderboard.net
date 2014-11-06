@@ -1,0 +1,24 @@
+( { EESchema Netlist Version 1.1 created  tor  6 nov 2014 14:10:18 }
+ ( /545B6A72 $noname  SW1 INCENC
+  (    A N-000004 )
+  (    B N-000003 )
+  (    C GND )
+ )
+ ( /545B6EFB AX3_1N  R2 10k
+  (    1 +5V )
+  (    2 N-000003 )
+ )
+ ( /545B6F6B AX3_1N  R1 10k
+  (    1 +5V )
+  (    2 N-000004 )
+ )
+ ( /545B7201 SIP6  J1 CONTROLLER
+  (    1 GND )
+  (    2 +5V )
+  (    3 ? )
+  (    4 ? )
+  (    5 N-000004 )
+  (    6 N-000003 )
+ )
+)
+*

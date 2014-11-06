@@ -1,0 +1,69 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:V_adc_dac
+LIBS:V_Battery
+LIBS:V_Connector
+LIBS:V_Diode
+LIBS:V_Linear
+LIBS:V_Logic
+LIBS:V_Microcontroller
+LIBS:V_Passive
+LIBS:V_Regulator
+LIBS:V_Relay
+LIBS:V_Transistor
+LIBS:ok-switches
+EELAYER 27 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "6 nov 2014"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L INCENC SW?
+U 1 1 545B6A72
+P 5150 3850
+F 0 "SW?" H 5150 4200 40  0000 C CNN
+F 1 "INCENC" H 5150 4300 40  0000 C CNN
+F 2 "" H 5150 3850 60  0000 C CNN
+F 3 "" H 5150 3850 60  0000 C CNN
+	1    5150 3850
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
