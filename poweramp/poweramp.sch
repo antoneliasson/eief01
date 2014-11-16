@@ -45,7 +45,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "11 nov 2014"
+Date "15 nov 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -138,7 +138,7 @@ L RESISTOR_0.25 R2
 U 1 1 5460E98D
 P 5800 2300
 F 0 "R2" H 5900 2350 50  0000 L CNN
-F 1 "2k2" H 5900 2250 50  0000 L CNN
+F 1 "3k3" H 5900 2250 50  0000 L CNN
 F 2 "AX3_1N" H 5800 2300 50  0001 C CNN
 F 3 "" H 5800 2300 60  0000 C CNN
 	1    5800 2300
