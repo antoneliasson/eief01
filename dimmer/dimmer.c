@@ -10,8 +10,8 @@
 #define BAUDRATE 9600 // doesn't transmit reliably faster than this
 #define UBRR F_CPU / BAUDRATE / 16 - 1
 
-volatile unsigned char AB_old;
-volatile unsigned char counter;
+static volatile unsigned char AB_old;
+static volatile unsigned char counter;
 
 static void init_pwm(void)
 {
