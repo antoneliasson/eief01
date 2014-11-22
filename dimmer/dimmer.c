@@ -1,27 +1,17 @@
+#include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
 #include "dimmer.h"
 #include "pinfunctions.h"
+#include "serial.h"
 
 #define BAUDRATE 9600 // doesn't transmit reliably faster than this
 #define UBRR F_CPU / BAUDRATE / 16 - 1
 
 volatile unsigned char AB_old;
 volatile unsigned char counter;
-
-static void init_usart(unsigned int ubrr)
-{
-    // Set baud rate
-    UBRR0H = (unsigned char)(ubrr>>8);
-    UBRR0L = (unsigned char)ubrr;
-    // Enable interrupt on receive
-    // Enable receiver and transmitter
-    UCSR0B = 1<<RXCIE0 | 1<<RXEN0 | 1<<TXEN0;
-    // Set frame format: 8 data bits, 1 stop bit, no parity
-    UCSR0C = 3<<UCSZ00;
-}
 
 static void init_pwm(void)
 {
@@ -52,13 +42,15 @@ int main(void)
     DDRC = 1<<5 | 1<<2;
     PORTB = 1<<2 | 1<<1; // enable pullups
 
-    init_usart(UBRR);
+    serial_init(UBRR);
     init_pwm();
     init_pci();
 
     OCR0A = 0x40; // 25 % duty cycle
     enable_poweramp();
     sei();
+
+    printf("init\n");
 
     unsigned char old_counter = 0;
     while (1) {
