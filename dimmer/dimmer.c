@@ -72,14 +72,14 @@ int main(void)
     return 0;
 }
 
-static void incCounter(void)
+static void inc_counter(void)
 {
     if (counter < 255) {
         counter += 1;
     }
 }
 
-static void decCounter(void)
+static void dec_counter(void)
 {
     if (counter > 0) {
         counter -= 1;
@@ -104,9 +104,9 @@ ISR(PCINT0_vect)
     unsigned char BA_new = PINB>>1 & 3;
     unsigned char sum = AB_old ^ BA_new;
     if (sum == 1) {
-        incCounter();
+        inc_counter();
     } else if (sum == 2) {
-        decCounter();
+        dec_counter();
     }
     // swap bits A and B
     AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
