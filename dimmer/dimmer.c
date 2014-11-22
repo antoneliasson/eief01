@@ -25,8 +25,11 @@ static void init_usart(unsigned int ubrr)
 
 static void init_pwm(void)
 {
-    // Set OC0A to output
-    DDRD |= 1<<PD6;
+    // Power amplifier is initally disabled
+    disable_poweramp();
+
+    // Set OC0A and AMP_EN to output
+    DDRD |= 1<<PD7 | 1<<PD6;
 
     // Timer 0 prescaler = f_clk_io / 8
     // => f_OC0A_PWM = 8000000 / 8 / 256 ~= 4 kHz
@@ -54,6 +57,7 @@ int main(void)
     init_pci();
 
     OCR0A = 0x40; // 25 % duty cycle
+    enable_poweramp();
     sei();
 
     unsigned char old_counter = 0;
@@ -82,6 +86,11 @@ static void decCounter(void)
     }
 }
 
+static void set_duty_cycle(unsigned char val)
+{
+    OCR0A = val;
+}
+
 ISR(USART_RX_vect)
 {
     toggle_status_led();
@@ -101,4 +110,7 @@ ISR(PCINT0_vect)
     }
     // swap bits A and B
     AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
+
+    toggle_status_led();
+    set_duty_cycle(counter);
 }
