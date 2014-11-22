@@ -18,3 +18,13 @@ void toggle_heartbeat_led(void)
         PORTC |= 1<<PC2;
     }
 }
+
+void enable_poweramp(void)
+{
+    PORTD &= ~(1<<PD7);
+}
+
+void disable_poweramp(void)
+{
+    PORTD |= 1<<PD7;
+}
