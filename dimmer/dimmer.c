@@ -5,7 +5,7 @@
 #include "dimmer.h"
 #include "pinfunctions.h"
 
-#define BAUDRATE 38400 // practical max with 8 MHz clock
+#define BAUDRATE 9600 // doesn't transmit reliably faster than this
 #define UBRR F_CPU / BAUDRATE / 16 - 1
 
 volatile unsigned char AB_old;
