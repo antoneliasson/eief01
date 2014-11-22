@@ -39,7 +39,7 @@ static void init_pci(void)
 
 int main(void)
 {
-    DDRC = 1<<5 | 1<<2;
+    DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
     PORTB = 1<<2 | 1<<1; // enable pullups
 
     serial_init(UBRR);
