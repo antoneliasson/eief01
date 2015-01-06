@@ -52,12 +52,7 @@ int main(void)
 
     printf("init\n");
 
-    unsigned char old_counter = 0;
     while (1) {
-        if (old_counter != counter) {
-            UDR0 = counter;
-            old_counter = counter;
-        }
         toggle_heartbeat_led();
         _delay_ms(500);
     }
@@ -87,7 +82,7 @@ ISR(USART_RX_vect)
 {
     toggle_status_led();
     char received = UDR0;
-    UDR0 = received; // echo it back
+    putchar(received); // echo it back
 }
 
 ISR(PCINT0_vect)
