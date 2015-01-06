@@ -49,7 +49,6 @@ void serial_init(unsigned int ubrr)
 
 static int enqueue(unsigned char c, FILE *stream)
 {
-    toggle_status2();
     if (c == '\n') {
         // Windows catering
         enqueue('\r', stream);
@@ -57,6 +56,7 @@ static int enqueue(unsigned char c, FILE *stream)
     ring_pos_t next_head = (ring_head + 1) % SERIAL_RING_SIZE;
     if (next_head == ring_tail) {
         // buffer overflow
+        set_status2();
         return -1;
     } else {
         ring_buffer[ring_head] = c;
@@ -68,7 +68,6 @@ static int enqueue(unsigned char c, FILE *stream)
 
 static int dequeue(void)
 {
-    toggle_status3();
     if (ring_head == ring_tail) {
         return -1;
     } else {
