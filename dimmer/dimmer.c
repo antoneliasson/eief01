@@ -57,8 +57,23 @@ int main(void)
     printf("init done\n\n");
 
     while (1) {
-        toggle_heartbeat_led();
-        _delay_ms(500);
+        // René Sommer's algorithm
+        unsigned char BA_new = PINB>>1 & 3;
+        unsigned char sum = AB_old ^ BA_new;
+
+        //    if (sum == 1 || sum == 2) {
+        if (sum == 1) {
+            inc_counter();
+            set_duty_cycle(counter);
+        } else if (sum == 2) {
+            dec_counter();
+            set_duty_cycle(counter);
+        }
+        // swap bits A and B
+        AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
+
+        //    }
+
     }
     return 0;
 }
@@ -67,7 +82,7 @@ static void inc_counter(void)
 {
     if (counter < 255) {
         counter += 1;
-        printf("incr to %d. ", counter);
+        printf("incr to %d. \n", counter);
     }
 }
 
@@ -75,7 +90,7 @@ static void dec_counter(void)
 {
     if (counter > 0) {
         counter -= 1;
-        printf("decr to %d. ", counter);
+        printf("decr to %d. \n", counter);
     }
 }
 
@@ -93,20 +108,23 @@ ISR(USART_RX_vect)
 
 ISR(PCINT0_vect)
 {
-    // René Sommer's algorithm
-    unsigned char BA_new = PINB>>1 & 3;
-    unsigned char sum = AB_old ^ BA_new;
-    printf("PCINT, sum=%d. ", sum);
+    /* // René Sommer's algorithm */
+    /* unsigned char BA_new = PINB>>1 & 3; */
+    /* unsigned char sum = AB_old ^ BA_new; */
+    /* printf("PCINT, sum=%d. ", sum); */
 
-    if (sum == 1) {
-        inc_counter();
-    } else if (sum == 2) {
-        dec_counter();
-    }
-    // swap bits A and B
-    AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
+    /* //    if (sum == 1 || sum == 2) { */
+    /* if (sum == 1) { */
+    /*     inc_counter(); */
+    /*     set_duty_cycle(counter); */
+    /* } else if (sum == 2) { */
+    /*     dec_counter(); */
+    /*     set_duty_cycle(counter); */
+    /* } */
+    /* // swap bits A and B */
+    /* AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2); */
 
-    printf("new AB: %d\n", AB_old);
-    toggle_status_led();
-    set_duty_cycle(counter);
+    /* printf("new AB: %d\n", AB_old); */
+    /* toggle_status_led(); */
+    /*     //    } */
 }
