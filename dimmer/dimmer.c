@@ -50,7 +50,7 @@ int main(void)
     enable_poweramp();
     sei();
 
-    printf("init\n");
+    printf("init done\n\n");
 
     while (1) {
         toggle_heartbeat_led();
@@ -63,6 +63,7 @@ static void inc_counter(void)
 {
     if (counter < 255) {
         counter += 1;
+        printf("incr to %d. ", counter);
     }
 }
 
@@ -70,6 +71,7 @@ static void dec_counter(void)
 {
     if (counter > 0) {
         counter -= 1;
+        printf("decr to %d. ", counter);
     }
 }
 
@@ -90,6 +92,8 @@ ISR(PCINT0_vect)
     // René Sommer's algorithm
     unsigned char BA_new = PINB>>1 & 3;
     unsigned char sum = AB_old ^ BA_new;
+    printf("PCINT, sum=%d. ", sum);
+
     if (sum == 1) {
         inc_counter();
     } else if (sum == 2) {
@@ -98,6 +102,7 @@ ISR(PCINT0_vect)
     // swap bits A and B
     AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
 
+    printf("new AB: %d\n", AB_old);
     toggle_status_led();
     set_duty_cycle(counter);
 }
