@@ -13,6 +13,10 @@
 static volatile unsigned char AB_old;
 static volatile unsigned char counter;
 
+static void inc_counter(void);
+static void dec_counter(void);
+static void set_duty_cycle(unsigned char);
+
 static void init_pwm(void)
 {
     // Power amplifier is initally disabled
