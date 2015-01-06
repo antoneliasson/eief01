@@ -1,5 +1,5 @@
 #pragma once
 
-#define SERIAL_RING_SIZE 64
+#define SERIAL_RING_SIZE 256
 
 void serial_init(unsigned int ubrr);
