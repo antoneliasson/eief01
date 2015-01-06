@@ -10,6 +10,11 @@ void toggle_status_led(void)
     }
 }
 
+void set_status2(void)
+{
+    PORTC |= 1<<PC4;
+}
+
 void toggle_status2(void)
 {
     if (PORTC & 1<<PC4) {
