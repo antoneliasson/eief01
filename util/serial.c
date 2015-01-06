@@ -14,8 +14,9 @@
 #include "serial.h"
 #include "pinfunctions.h"
 
-static volatile uint8_t ring_head;
-static volatile uint8_t ring_tail;
+typedef uint8_t ring_pos_t;
+static volatile ring_pos_t ring_head; // first free position
+static volatile ring_pos_t ring_tail; // first used position (to send)
 static volatile unsigned char ring_buffer[SERIAL_RING_SIZE];
 
 static int enqueue(unsigned char c, FILE *stream);
@@ -53,7 +54,7 @@ static int enqueue(unsigned char c, FILE *stream)
         // Windows catering
         enqueue('\r', stream);
     }
-    uint8_t next_head = (ring_head + 1) % SERIAL_RING_SIZE;
+    ring_pos_t next_head = (ring_head + 1) % SERIAL_RING_SIZE;
     if (next_head == ring_tail) {
         // buffer overflow
         return -1;
