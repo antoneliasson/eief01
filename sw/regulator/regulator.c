@@ -70,7 +70,6 @@ int main(void)
         unsigned char BA_new = PINB>>1 & 3;
         unsigned char sum = AB_old ^ BA_new;
 
-        //    if (sum == 1 || sum == 2) {
         if (sum == 1) {
             inc_counter();
             set_duty_cycle(counter);
@@ -80,9 +79,6 @@ int main(void)
         }
         // swap bits A and B
         AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
-
-        //    }
-
     }
     return 0;
 }
