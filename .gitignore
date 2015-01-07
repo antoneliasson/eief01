@@ -1,15 +1,1 @@
 *~
-
-# Garbage
-.dep
-*.elf
-*.lss
-*.lst
-*.map
-*.o
-*.sym
-
-# This will not ignore possible binary releases since they are placed in
-# a subdirectory
-*/*.hex
-*/*.eep
