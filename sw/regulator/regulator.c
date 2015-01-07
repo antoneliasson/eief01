@@ -40,6 +40,18 @@ static void init_pwm(void)
     TCCR0A = 1<<COM0A1 | 1<<WGM01 | 1<<WGM00;
 }
 
+static void init_clock(void)
+{
+    // CTC. Timer 1 prescaler = f_clk_io / 64
+    TCCR1B = 1<<WGM12 | 1<<CS11 | 1<<CS10;
+
+    // Compare match at 10 Hz
+    OCR1A = F_CPU / 64 / 10;
+
+    // Interrupt on compare match
+    TIMSK1 = 1<<OCIE1A;
+}
+
 static void init_pci(void)
 {
     // Enable pin change interrupt on PCINT7..0
@@ -58,6 +70,7 @@ int main(void)
 
     serial_init(UBRR);
     init_pwm();
+    init_clock();
     init_pci();
 
     enable_poweramp();
@@ -132,4 +145,9 @@ ISR(PCINT0_vect)
     /* printf("new AB: %d\n", AB_old); */
     /* toggle_status_led(); */
     /*     //    } */
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+
 }
