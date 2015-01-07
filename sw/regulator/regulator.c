@@ -66,7 +66,7 @@ int main(void)
     PORTB = 1<<2 | 1<<1; // enable pullups
 
     // See ../osccal program. The default is 155 for this chip.
-    OSCCAL = 143;
+    OSCCAL = 148;
 
     serial_init(UBRR);
     init_pwm();
