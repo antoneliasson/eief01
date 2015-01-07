@@ -7,8 +7,15 @@
 #include "pinfunctions.h"
 #include "serial.h"
 
-#define BAUDRATE 9600 // doesn't transmit reliably faster than this
+#define BAUDRATE 19200
+
+// Formula from the ATmega88 datasheet, section 17.3.1. Without calibration, it
+// appears to work only for BAUDRATE <= 9600:
 #define UBRR F_CPU / BAUDRATE / 16 - 1
+
+// This works for BAUDRATE <= 19200. I think my ATmega's internal clock needs
+// calibration.
+//#define UBRR F_CPU / BAUDRATE / 16
 
 static volatile unsigned char AB_old;
 static volatile unsigned char counter;
@@ -45,6 +52,9 @@ int main(void)
 {
     DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
     PORTB = 1<<2 | 1<<1; // enable pullups
+
+    // See ../osccal program. The default is 155 for this chip.
+    OSCCAL = 143;
 
     serial_init(UBRR);
     init_pwm();
