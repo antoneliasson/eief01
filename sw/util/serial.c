@@ -19,7 +19,7 @@ static volatile ring_pos_t tx_ring_head; // first free position
 static volatile ring_pos_t tx_ring_tail; // first used position (to send)
 static volatile unsigned char tx_ring_buffer[SERIAL_RING_SIZE];
 
-static int enqueue(unsigned char c, FILE *stream);
+static int enqueue(unsigned char c);
 
 static FILE mystdout = FDEV_SETUP_STREAM(enqueue, NULL, _FDEV_SETUP_WRITE);
 
@@ -47,11 +47,12 @@ void serial_init(unsigned int ubrr)
     stdout = &mystdout;
 }
 
-static int enqueue(unsigned char c, FILE *stream)
+static int enqueue(unsigned char c)
 {
-    if (c == '\n') {
-        // Windows catering
-        enqueue('\r', stream);
+    if (c == '\r') {
+        // Carriage returns are evil. In Windows use PuTTY with settings
+        // "Implicit CR in every LF" and "Implicit LF in every CR".
+        c = '\n';
     }
     ring_pos_t next_head = (tx_ring_head + 1) % SERIAL_RING_SIZE;
     if (next_head == tx_ring_tail) {
