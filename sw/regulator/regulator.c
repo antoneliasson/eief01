@@ -52,14 +52,6 @@ static void init_clock(void)
     TIMSK1 = 1<<OCIE1A;
 }
 
-static void init_pci(void)
-{
-    // Enable pin change interrupt on PCINT7..0
-    PCICR = 1<<PCIE0;
-    // Enable pin change interrupt on PCINT1, PCINT0
-    PCMSK0 = 1<<PCINT1 | 1<<PCINT0;
-}
-
 int main(void)
 {
     DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
@@ -72,7 +64,6 @@ int main(void)
     init_pwm();
     set_duty_cycle(0);
     init_clock();
-    init_pci();
 
     enable_poweramp();
     sei();
@@ -123,29 +114,6 @@ ISR(USART_RX_vect)
     toggle_status_led();
     char received = UDR0;
     putchar(received); // echo it back
-}
-
-ISR(PCINT0_vect)
-{
-    /* // René Sommer's algorithm */
-    /* unsigned char BA_new = PINB>>1 & 3; */
-    /* unsigned char sum = AB_old ^ BA_new; */
-    /* printf("PCINT, sum=%d. ", sum); */
-
-    /* //    if (sum == 1 || sum == 2) { */
-    /* if (sum == 1) { */
-    /*     inc_counter(); */
-    /*     set_duty_cycle(counter); */
-    /* } else if (sum == 2) { */
-    /*     dec_counter(); */
-    /*     set_duty_cycle(counter); */
-    /* } */
-    /* // swap bits A and B */
-    /* AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2); */
-
-    /* printf("new AB: %d\n", AB_old); */
-    /* toggle_status_led(); */
-    /*     //    } */
 }
 
 ISR(TIMER1_COMPA_vect)
