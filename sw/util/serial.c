@@ -23,10 +23,13 @@ struct circular_queue {
 };
 
 static volatile struct circular_queue tx_queue;
+static volatile struct circular_queue rx_queue;
 
 static int enqueue_tx(unsigned char, FILE*);
+static int dequeue_rx(FILE*);
 
 static FILE mystdout = FDEV_SETUP_STREAM(enqueue_tx, NULL, _FDEV_SETUP_WRITE);
+static FILE mystdin = FDEV_SETUP_STREAM(NULL, dequeue_rx, _FDEV_SETUP_READ);
 
 static void enable_transmission(void)
 {
@@ -50,6 +53,7 @@ void serial_init(unsigned int ubrr)
     UCSR0C = 3<<UCSZ00;
 
     stdout = &mystdout;
+    stdin = &mystdin;
 }
 
 static int enqueue(unsigned char c, volatile struct circular_queue *queue)
@@ -77,6 +81,10 @@ static int enqueue_tx(unsigned char c, FILE *stream)
     return enqueue(c, &tx_queue);
 }
 
+static int enqueue_rx(unsigned char c) {
+    return enqueue(c, &rx_queue);
+}
+
 static int dequeue(volatile struct circular_queue *queue)
 {
     if (queue->head == queue->tail) {
@@ -93,6 +101,11 @@ static int dequeue_tx(void)
     return dequeue(&tx_queue);
 }
 
+static int dequeue_rx(FILE* stream)
+{
+    return dequeue(&rx_queue);
+}
+
 ISR(USART_UDRE_vect)
 {
     toggle_status_led();
@@ -107,7 +120,6 @@ ISR(USART_UDRE_vect)
 
 ISR(USART_RX_vect)
 {
-    toggle_status_led();
-    char received = UDR0;
-    putchar(received); // echo it back
+    unsigned char received = UDR0;
+    enqueue_rx(received);
 }
