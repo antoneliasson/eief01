@@ -18,7 +18,7 @@
 //#define UBRR F_CPU / BAUDRATE / 16
 
 static volatile unsigned char AB_old;
-static volatile int8_t counter;
+static volatile unsigned char counter;
 
 static void inc_counter(void);
 static void dec_counter(void);
@@ -90,7 +90,7 @@ int main(void)
 
 static void inc_counter(void)
 {
-    if (counter < 127) {
+    if (counter < 255) {
         counter += 1;
         printf("incr to %d. \n", counter);
     }
@@ -98,7 +98,7 @@ static void inc_counter(void)
 
 static void dec_counter(void)
 {
-    if (counter > -127) {
+    if (counter > 0) {
         counter -= 1;
         printf("decr to %d. \n", counter);
     }
