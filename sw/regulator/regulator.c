@@ -61,7 +61,7 @@ static void init_clock(void)
     // CTC. Timer 1 prescaler = f_clk_io / 64
     TCCR1B = 1<<WGM12 | 1<<CS11 | 1<<CS10;
 
-    // Compare match at 10 Hz
+    // Compare match at REG_FREQ Hz
     OCR1A = F_CPU / 64 / REG_FREQ;
 
     // Interrupt on compare match
