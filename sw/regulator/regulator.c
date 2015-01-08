@@ -118,9 +118,9 @@ ISR(USART_RX_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-    /* int16_t speed = 10*counter; */
-    /* if (speed != 0) { */
-    /*     printf("Speed = %d ticks per second\n", speed); */
-    /* } */
-    /* counter = 0; */
+    int16_t speed = 10*counter;
+    if (speed != 0) {
+        printf("Speed = %d ticks per second\n", speed);
+    }
+    counter = 0;
 }
