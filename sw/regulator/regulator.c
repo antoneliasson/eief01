@@ -17,6 +17,12 @@
 // calibration.
 //#define UBRR F_CPU / BAUDRATE / 16
 
+// The rate at which the regulation interrupt is fired
+#define REG_FREQ 2
+
+// The number of ticks per revolution
+#define TICKS_PER_REV 100
+
 static volatile unsigned char AB_old;
 static volatile unsigned char counter;
 
@@ -46,7 +52,7 @@ static void init_clock(void)
     TCCR1B = 1<<WGM12 | 1<<CS11 | 1<<CS10;
 
     // Compare match at 10 Hz
-    OCR1A = F_CPU / 64 / 10;
+    OCR1A = F_CPU / 64 / REG_FREQ;
 
     // Interrupt on compare match
     TIMSK1 = 1<<OCIE1A;
@@ -118,9 +124,9 @@ ISR(USART_RX_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-    int16_t speed = 10*counter;
+    int16_t speed = REG_FREQ * counter * 60 / TICKS_PER_REV;
     if (speed != 0) {
-        printf("Speed = %d ticks per second\n", speed);
+        printf("Speed = %d rpm\n", speed);
     }
     counter = 0;
 }
