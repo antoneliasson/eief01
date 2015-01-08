@@ -36,8 +36,8 @@ static void init_pwm(void)
     // => f_OC0A_PWM = 8000000 / 8 / 256 ~= 4 kHz
     TCCR0B = 1<<CS01;
 
-    // Fast PWM, TOP=0xFF. Clear OC0A on compare match, set at BOTTOM
-    TCCR0A = 1<<COM0A1 | 1<<WGM01 | 1<<WGM00;
+    // Fast PWM, TOP=0xFF. Set OC0A on compare match, clear at BOTTOM
+    TCCR0A = 1<<COM0A1 | 1<<COM0A0 | 1<<WGM01 | 1<<WGM00;
 }
 
 static void init_clock(void)
@@ -70,6 +70,7 @@ int main(void)
 
     serial_init(UBRR);
     init_pwm();
+    set_duty_cycle(0);
     init_clock();
     init_pci();
 
@@ -114,7 +115,7 @@ static void dec_counter(void)
 
 static void set_duty_cycle(unsigned char val)
 {
-    OCR0A = val;
+    OCR0A = 255 - val;
 }
 
 ISR(USART_RX_vect)
