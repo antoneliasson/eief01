@@ -132,13 +132,6 @@ static int sat(int val, int max, int min)
     return val;
 }
 
-ISR(USART_RX_vect)
-{
-    toggle_status_led();
-    char received = UDR0;
-    putchar(received); // echo it back
-}
-
 ISR(TIMER1_COMPA_vect)
 {
     int16_t y = REG_FREQ * counter * 60 / TICKS_PER_REV;

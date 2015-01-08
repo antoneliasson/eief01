@@ -105,3 +105,10 @@ ISR(USART_UDRE_vect)
         UDR0 = c;
     }
 }
+
+ISR(USART_RX_vect)
+{
+    toggle_status_led();
+    char received = UDR0;
+    putchar(received); // echo it back
+}
