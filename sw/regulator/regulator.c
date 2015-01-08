@@ -83,10 +83,8 @@ int main(void)
 
         if (sum == 1) {
             inc_counter();
-            set_duty_cycle(counter);
         } else if (sum == 2) {
             dec_counter();
-            set_duty_cycle(counter);
         }
         // swap bits A and B
         AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
@@ -98,7 +96,6 @@ static void inc_counter(void)
 {
     if (counter < 255) {
         counter += 1;
-        printf("incr to %d. \n", counter);
     }
 }
 
@@ -106,7 +103,6 @@ static void dec_counter(void)
 {
     if (counter > 0) {
         counter -= 1;
-        printf("decr to %d. \n", counter);
     }
 }
 
