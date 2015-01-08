@@ -26,6 +26,16 @@
 static volatile unsigned char AB_old;
 static volatile unsigned char counter;
 
+static int I;
+
+static const int yref = 128;
+static const int umax = 255;
+static const int umin = 0;
+
+static const unsigned int K = 4;
+static const unsigned int Ti = 1;
+static const unsigned int beta = 1;
+
 static void inc_counter(void);
 static void dec_counter(void);
 static void set_duty_cycle(unsigned char);
@@ -111,6 +121,17 @@ static void set_duty_cycle(unsigned char val)
     OCR0A = 255 - val;
 }
 
+static int sat(int val, int max, int min)
+{
+    if (val > max) {
+        return max;
+    }
+    if (val < min) {
+        return min;
+    }
+    return val;
+}
+
 ISR(USART_RX_vect)
 {
     toggle_status_led();
@@ -120,9 +141,15 @@ ISR(USART_RX_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-    int16_t speed = REG_FREQ * counter * 60 / TICKS_PER_REV;
-    if (speed != 0) {
-        printf("Speed = %d rpm\n", speed);
-    }
+    int16_t y = REG_FREQ * counter * 60 / TICKS_PER_REV;
+    // Calculate output
+    int e = yref - y;
+    int v = K * (beta * yref - y);// + I;
+    int u = sat(v, umax, umin);
+    set_duty_cycle(u);
+    // Update states
+    I = I + (K / (REG_FREQ*Ti)) * e; // + (h/Tr) * (u - v);
+    //yold = y;
+    printf("y = %d rpm. u = %d\n", y, u);
     counter = 0;
 }
