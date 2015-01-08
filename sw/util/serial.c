@@ -24,7 +24,6 @@ struct circular_queue {
 
 static volatile struct circular_queue tx_queue;
 
-static int enqueue(unsigned char, volatile struct circular_queue*);
 static int enqueue_tx(unsigned char, FILE*);
 
 static FILE mystdout = FDEV_SETUP_STREAM(enqueue_tx, NULL, _FDEV_SETUP_WRITE);
