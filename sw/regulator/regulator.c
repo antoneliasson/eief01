@@ -76,7 +76,7 @@ int main(void)
     // See ../osccal program. The default is 155 for this chip.
     OSCCAL = 148;
 
-    serial_init(UBRR);
+    serial_init(UBRR, 1);
     init_timers();
     set_duty_cycle(0);
 

@@ -25,6 +25,9 @@ struct circular_queue {
 static volatile struct circular_queue tx_queue;
 static volatile struct circular_queue rx_queue;
 
+// Echo incoming characters immediately?
+static volatile int echo;
+
 static int enqueue_tx(unsigned char, FILE*);
 static int dequeue_rx(FILE*);
 
@@ -41,7 +44,7 @@ static void disable_transmission(void)
     UCSR0B &= ~(1<<UDRIE0);
 }
 
-void serial_init(unsigned int ubrr)
+void serial_init(unsigned int ubrr, int myecho)
 {
     // Set baud rate
     UBRR0H = (unsigned char)(ubrr>>8);
@@ -54,6 +57,8 @@ void serial_init(unsigned int ubrr)
 
     stdout = &mystdout;
     stdin = &mystdin;
+
+    echo = myecho;
 }
 
 static int enqueue(unsigned char c, volatile struct circular_queue *queue)
@@ -128,4 +133,7 @@ ISR(USART_RX_vect)
 {
     unsigned char received = UDR0;
     enqueue_rx(received);
+    if (echo) {
+        enqueue_tx(received, NULL);
+    }
 }
