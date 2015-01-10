@@ -54,6 +54,9 @@ static void init_pwm(void)
 
     // Fast PWM, TOP=0xFF. Set OC0A on compare match, clear at BOTTOM
     TCCR0A = 1<<COM0A1 | 1<<COM0A0 | 1<<WGM01 | 1<<WGM00;
+
+    // Interrupt on compare match
+    TIMSK0 = 1<<OCIE0A;
 }
 
 static void init_clock(void)
@@ -87,17 +90,6 @@ int main(void)
     printf("init done\n\n");
 
     while (1) {
-        // René Sommer's algorithm
-        unsigned char BA_new = PINB>>1 & 3;
-        unsigned char sum = AB_old ^ BA_new;
-
-        if (sum == 1) {
-            inc_counter();
-        } else if (sum == 2) {
-            dec_counter();
-        }
-        // swap bits A and B
-        AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
     }
     return 0;
 }
@@ -130,6 +122,21 @@ static int sat(int val, int max, int min)
         return min;
     }
     return val;
+}
+
+ISR(TIMER0_COMPA_vect)
+{
+    // René Sommer's algorithm
+    unsigned char BA_new = PINB>>1 & 3;
+    unsigned char sum = AB_old ^ BA_new;
+
+    if (sum == 1) {
+        inc_counter();
+    } else if (sum == 2) {
+        dec_counter();
+    }
+    // swap bits A and B
+    AB_old = (BA_new>>1 & 1) | (BA_new<<1 & 2);
 }
 
 ISR(TIMER1_COMPA_vect)
