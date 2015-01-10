@@ -40,7 +40,7 @@ static void inc_counter(void);
 static void dec_counter(void);
 static void set_duty_cycle(unsigned char);
 
-static void init_pwm(void)
+static void init_timers(void)
 {
     // Power amplifier is initally disabled
     disable_poweramp();
@@ -57,10 +57,7 @@ static void init_pwm(void)
 
     // Interrupt on compare match
     TIMSK0 = 1<<OCIE0A;
-}
 
-static void init_clock(void)
-{
     // CTC. Timer 1 prescaler = f_clk_io / 64
     TCCR1B = 1<<WGM12 | 1<<CS11 | 1<<CS10;
 
@@ -80,9 +77,8 @@ int main(void)
     OSCCAL = 148;
 
     serial_init(UBRR);
-    init_pwm();
+    init_timers();
     set_duty_cycle(0);
-    init_clock();
 
     enable_poweramp();
     sei();
