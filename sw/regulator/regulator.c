@@ -68,6 +68,56 @@ static void init_timers(void)
     TIMSK1 = 1<<OCIE1A;
 }
 
+static void process_cmds(void)
+{
+    char line[16];
+    char *status = fgets(line, 16, stdin);
+    if (status == 0) {
+        printf("Error reading stdin.\n");
+        set_error_led();
+        return;
+    }
+    char cmd;
+    char var;
+    int val;
+    int args = sscanf(line, "%c %c %d", &cmd, &var, &val);
+
+    switch (cmd) {
+    case 'g':
+        if (args == 2) {
+            switch (var) {
+            case 'k':
+                printf("%d\n", K);
+                break;
+            default:
+                printf("Syntax error. Invalid variable %c.\n", var);
+                break;
+            }
+        } else {
+            printf("Syntax error. Expected 2 arguments, got %d\n", args);
+        }
+        break;
+    case 's':
+        if (args == 3) {
+            switch (var) {
+            case 'k':
+                printf("OK\n");
+                K = val;
+                break;
+            default:
+                printf("Syntax error. Invalid variable %c.\n", var);
+                break;
+            }
+        } else {
+            printf("Syntax error. Expected 3 arguments, got %d\n", args);
+        }
+        break;
+    default:
+        printf("Syntax error. Invalid command %c\n", cmd);
+        break;
+    }
+}
+
 int main(void)
 {
     DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
@@ -86,6 +136,7 @@ int main(void)
     printf("init done\n\n");
 
     while (1) {
+        process_cmds();
     }
     return 0;
 }
