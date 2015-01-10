@@ -30,12 +30,12 @@ static volatile uint8_t u;
 static volatile int16_t y;
 static int I;
 
-static const int yref = 128;
+static uint8_t yref = 70;
 static const int umax = 255;
 static const int umin = 0;
 
 static unsigned int K = 2;
-static const unsigned int Ti = 1;
+static unsigned int Ti = 1;
 static const unsigned int beta = 1;
 
 static void inc_counter(void);
@@ -91,6 +91,12 @@ static void process_cmds(void)
             case 'k':
                 printf("%d\n", K);
                 break;
+            case 'r':
+                printf("%d\n", yref);
+                break;
+            case 't':
+                printf("%d\n", Ti);
+                break;
             case 'u':
                 printf("%d\n", u);
                 break;
@@ -111,6 +117,14 @@ static void process_cmds(void)
             case 'k':
                 printf("OK\n");
                 K = val;
+                break;
+            case 'r':
+                printf("OK\n");
+                yref = val;
+                break;
+            case 't':
+                printf("OK\n");
+                Ti = val;
                 break;
             default:
                 printf("Syntax error. Invalid variable %c.\n", var);
