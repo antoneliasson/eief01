@@ -26,6 +26,8 @@
 static volatile unsigned char AB_old;
 static volatile unsigned char counter;
 
+static volatile uint8_t u;
+static volatile int16_t y;
 static int I;
 
 static const int yref = 128;
@@ -88,6 +90,12 @@ static void process_cmds(void)
             switch (var) {
             case 'k':
                 printf("%d\n", K);
+                break;
+            case 'u':
+                printf("%d\n", u);
+                break;
+            case 'y':
+                printf("%d\n", y); // rpm
                 break;
             default:
                 printf("Syntax error. Invalid variable %c.\n", var);
@@ -188,15 +196,15 @@ ISR(TIMER0_COMPA_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-    int16_t y = REG_FREQ * counter * 60 / TICKS_PER_REV;
+    y = REG_FREQ * counter * 60 / TICKS_PER_REV;
     // Calculate output
     int e = yref - y;
     int v = K * (beta * yref - y);// + I;
-    int u = sat(v, umax, umin);
+    u = sat(v, umax, umin);
     set_duty_cycle(u);
     // Update states
     I = I + (K / (REG_FREQ*Ti)) * e; // + (h/Tr) * (u - v);
     //yold = y;
-    printf("y = %d rpm. u = %d\n", y, u);
+    //printf("y = %d rpm. u = %d\n", y, u);
     counter = 0;
 }
