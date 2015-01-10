@@ -32,7 +32,7 @@ static const int yref = 128;
 static const int umax = 255;
 static const int umin = 0;
 
-static const unsigned int K = 4;
+static const unsigned int K = 2;
 static const unsigned int Ti = 1;
 static const unsigned int beta = 1;
 
