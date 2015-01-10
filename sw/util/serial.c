@@ -88,7 +88,7 @@ static int enqueue_rx(unsigned char c) {
 static int dequeue(volatile struct circular_queue *queue)
 {
     if (queue->head == queue->tail) {
-        return -1;
+        return EOF;
     } else {
         unsigned char c = queue->buffer[queue->tail];
         queue->tail = (queue->tail + 1) % SERIAL_RING_SIZE;
