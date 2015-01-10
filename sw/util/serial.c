@@ -85,15 +85,22 @@ static int enqueue_rx(unsigned char c) {
     return enqueue(c, &rx_queue);
 }
 
+static int queue_is_empty(volatile struct circular_queue *queue)
+{
+    return queue->head == queue->tail;
+}
+
+/*
+ * Blocking queue polling function
+ */
 static int dequeue(volatile struct circular_queue *queue)
 {
-    if (queue->head == queue->tail) {
-        return EOF;
-    } else {
-        unsigned char c = queue->buffer[queue->tail];
-        queue->tail = (queue->tail + 1) % SERIAL_RING_SIZE;
-        return c;
-    }
+    while (queue_is_empty(queue))
+        ;
+
+    unsigned char c = queue->buffer[queue->tail];
+    queue->tail = (queue->tail + 1) % SERIAL_RING_SIZE;
+    return c;
 }
 
 static int dequeue_tx(void)
@@ -109,11 +116,10 @@ static int dequeue_rx(FILE* stream)
 ISR(USART_UDRE_vect)
 {
     toggle_status_led();
-    int c = dequeue_tx();
-    if (c == -1) {
-        // empty buffer
+    if (queue_is_empty(&tx_queue)) {
         disable_transmission();
     } else {
+        int c = dequeue_tx();
         UDR0 = c;
     }
 }
