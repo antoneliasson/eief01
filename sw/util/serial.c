@@ -66,7 +66,7 @@ static int enqueue(unsigned char c, volatile struct circular_queue *queue)
     ring_pos_t next_head = (queue->head + 1) % SERIAL_RING_SIZE;
     if (next_head == queue->tail) {
         // buffer overflow
-        set_status2();
+        set_error_led();
         return -1;
     } else {
         queue->buffer[queue->head] = c;

@@ -6,7 +6,7 @@ void toggle_status_led(void)
     PORTC ^= _BV(PC5);
 }
 
-void set_status2(void)
+void set_error_led(void)
 {
     PORTC |= 1<<PC4;
 }
