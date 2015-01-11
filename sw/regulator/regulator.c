@@ -36,6 +36,7 @@ static const int umin = 0;
 
 static unsigned int K = 2;
 static unsigned int Ti = 1;
+static unsigned int Tr = 1;
 static const unsigned int beta = 1;
 
 static void inc_counter(void);
@@ -220,7 +221,7 @@ ISR(TIMER1_COMPA_vect)
     u = sat(v, umax, umin);
     set_duty_cycle(u);
     // Update states
-    I = I + (K / (REG_FREQ*(double)Ti)) * e; // + (h/Tr) * (u - v);
+    I = I + (K / (REG_FREQ*(double)Ti)) * e + (u - v) / (REG_FREQ*(double)Tr);
     //yold = y;
     //printf("y = %d rpm. u = %d\n", y, u);
     counter = 0;
