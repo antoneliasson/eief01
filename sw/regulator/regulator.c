@@ -88,6 +88,9 @@ static void process_cmds(void)
     case 'g':
         if (args == 2) {
             switch (var) {
+            case 'i':
+                printf("%lf\n", I);
+                break;
             case 'k':
                 printf("%d\n", K);
                 break;
