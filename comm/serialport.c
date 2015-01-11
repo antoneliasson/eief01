@@ -17,7 +17,7 @@
 
 #define _POSIX_SOURCE 1		/* POSIX compliant source */
 
-static int fd, c, res;
+static int fd;
 static struct termios oldtio, newtio;
 static char *device;
 
