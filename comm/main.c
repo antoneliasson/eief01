@@ -23,7 +23,7 @@ int main()
 
     print_welcome();
 
-    char buff[32];
+    char buff[64];
     char *result;
 
     result = fgets(buff, sizeof(buff), stdin);
