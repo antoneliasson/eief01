@@ -28,7 +28,7 @@ static volatile unsigned char counter;
 
 static volatile uint8_t u;
 static volatile int16_t y;
-static volatile int16_t I;
+static volatile double I;
 
 static uint8_t yref = 70;
 static const int umax = 255;
@@ -217,7 +217,7 @@ ISR(TIMER1_COMPA_vect)
     u = sat(v, umax, umin);
     set_duty_cycle(u);
     // Update states
-    I = I + (K / (REG_FREQ*Ti)) * e; // + (h/Tr) * (u - v);
+    I = I + (K / (REG_FREQ*(double)Ti)) * e; // + (h/Tr) * (u - v);
     //yold = y;
     //printf("y = %d rpm. u = %d\n", y, u);
     counter = 0;
