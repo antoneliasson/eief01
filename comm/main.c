@@ -23,18 +23,18 @@ int main()
 
     print_welcome();
 
-    char buff[16];
+    char buff[32];
     char *result;
 
-    result = fgets(buff, 16, stdin);
+    result = fgets(buff, sizeof(buff), stdin);
     while (result == buff) {
         fputs(buff, serial);
-        result = fgets(buff, 16, serial);
+        result = fgets(buff, sizeof(buff), serial);
         if (result == buff) {
             fputs(buff, stdout);
         }
         fputs("> ", stdout);
-        result = fgets(buff, 16, stdin);
+        result = fgets(buff, sizeof(buff), stdin);
     }
     /* fputs("hej\n", serial); */
     /* printf("%d %s", result==buff, buff); */
