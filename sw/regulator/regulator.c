@@ -30,7 +30,7 @@ static volatile uint8_t u;
 static volatile int16_t y;
 static volatile double I;
 
-static uint8_t yref = 70;
+static uint8_t yref = 0;
 static const int umax = 255;
 static const int umin = 0;
 
@@ -148,7 +148,7 @@ int main(void)
     // See ../osccal program. The default is 155 for this chip.
     OSCCAL = 148;
 
-    serial_init(UBRR, 1);
+    serial_init(UBRR, 0);
     init_timers();
     set_duty_cycle(0);
 
