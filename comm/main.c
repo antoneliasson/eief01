@@ -36,9 +36,7 @@ int main()
         fputs("> ", stdout);
         result = fgets(buff, sizeof(buff), stdin);
     }
-    /* fputs("hej\n", serial); */
-    /* printf("%d %s", result==buff, buff); */
-
+    putchar('\n');
     fclose(serial);
     serial_cleanup(fd);
     return 0;
