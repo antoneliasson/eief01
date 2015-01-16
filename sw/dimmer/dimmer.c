@@ -7,7 +7,7 @@
 #include "pinfunctions.h"
 #include "serial.h"
 
-#define BAUDRATE 9600 // doesn't transmit reliably faster than this
+#define BAUDRATE 19200 // doesn't transmit reliably faster than this
 #define UBRR F_CPU / BAUDRATE / 16 - 1
 
 static volatile unsigned char AB_old;
@@ -45,6 +45,9 @@ int main(void)
 {
     DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
     PORTB = 1<<2 | 1<<1; // enable pullups
+
+    // See ../osccal program. The default is 155 for this chip.
+    OSCCAL = 148;
 
     serial_init(UBRR, 1);
     init_pwm();
