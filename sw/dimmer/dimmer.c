@@ -46,7 +46,7 @@ int main(void)
     DDRC = 1<<5 | 1<<4 | 1<<3 | 1<<2;
     PORTB = 1<<2 | 1<<1; // enable pullups
 
-    serial_init(UBRR);
+    serial_init(UBRR, 1);
     init_pwm();
     init_pci();
 
@@ -96,13 +96,6 @@ static void dec_counter(void)
 static void set_duty_cycle(unsigned char val)
 {
     OCR0A = val;
-}
-
-ISR(USART_RX_vect)
-{
-    toggle_status_led();
-    char received = UDR0;
-    putchar(received); // echo it back
 }
 
 ISR(PCINT0_vect)
